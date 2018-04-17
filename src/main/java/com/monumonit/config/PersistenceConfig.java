@@ -73,6 +73,8 @@ public class PersistenceConfig {
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         hibernateProperties.setProperty("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+        hibernateProperties.setProperty("hibernate.physical_naming_strategy",
+                env.getProperty("hibernate.physical_naming_strategy"));
         hibernateProperties.setProperty("hibernate.jdbc.lob.non_contextual_creation",
                 env.getProperty("hibernate.jdbc.lob.non_contextual_creation"));
 
