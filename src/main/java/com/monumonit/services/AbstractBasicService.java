@@ -25,7 +25,7 @@ public abstract class AbstractBasicService<T extends Serializable> implements Ba
     @Transactional(readOnly = true)
     public T find(final Long id) {
         Optional<T> entity = getRepository().findById(id);
-        return entity.isPresent() ? entity.get() : null;
+        return entity.orElse(null);
     }
 
     @Override
