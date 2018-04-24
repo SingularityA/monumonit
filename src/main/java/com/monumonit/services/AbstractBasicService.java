@@ -7,13 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 
 @Transactional
-public abstract class AbstractBasicService<T extends Serializable> implements BasicServiceInterface<T> {
+public abstract class AbstractBasicService<T extends Serializable, ID_TYPE> implements BasicServiceInterface<T, ID_TYPE> {
 
-    protected abstract JpaRepository<T, Long> getRepository();
+    protected abstract JpaRepository<T, ID_TYPE> getRepository();
 
     @Override
     @Transactional(readOnly = true)
@@ -22,15 +21,18 @@ public abstract class AbstractBasicService<T extends Serializable> implements Ba
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public T find(final Long id) {
-        Optional<T> entity = getRepository().findById(id);
-        return entity.orElse(null);
+    public T save(final T entity) {
+        return getRepository().save(entity);
     }
 
     @Override
-    public T save(final T entity) {
-        return getRepository().save(entity);
+    public List<T> saveAll(final Iterable<T> entities) {
+        return getRepository().saveAll(entities);
+    }
+
+    @Override
+    public T saveAndFlush(final T entity) {
+        return getRepository().saveAndFlush(entity);
     }
 
     @Override
