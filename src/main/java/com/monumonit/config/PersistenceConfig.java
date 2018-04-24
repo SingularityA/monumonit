@@ -5,6 +5,7 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@ComponentScan("com.monumonit")
 @PropertySource("classpath:persistence.properties")
 @EnableJpaRepositories(basePackages = "com.monumonit.repositories")
 public class PersistenceConfig {
@@ -69,12 +71,21 @@ public class PersistenceConfig {
 
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         hibernateProperties.setProperty("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         hibernateProperties.setProperty("hibernate.physical_naming_strategy",
                 env.getProperty("hibernate.physical_naming_strategy"));
+
+        hibernateProperties.setProperty("hibernate.jdbc.batch_size", env.getProperty("hibernate.jdbc.batch_size"));
+        hibernateProperties.setProperty("hibernate.order_inserts", env.getProperty("hibernate.order_inserts"));
+        hibernateProperties.setProperty("hibernate.order_updates", env.getProperty("hibernate.order_updates"));
+        hibernateProperties.setProperty("hibernate.jdbc.fetch_size", env.getProperty("hibernate.jdbc.fetch_size"));
+        hibernateProperties.setProperty("hibernate.max_fetch_depth", env.getProperty("hibernate.max_fetch_depth"));
+
         hibernateProperties.setProperty("hibernate.jdbc.lob.non_contextual_creation",
                 env.getProperty("hibernate.jdbc.lob.non_contextual_creation"));
 
