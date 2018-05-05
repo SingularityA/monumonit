@@ -76,8 +76,8 @@ CREATE TABLE person (
   last_name     VARCHAR(20)  NOT NULL,
   pattern_name  VARCHAR(20),
   second_name   VARCHAR(20),
-  birth_date    TIMESTAMP    NOT NULL,
-  death_date    TIMESTAMP,
+  birth_date    DATE         NOT NULL,
+  death_date    DATE,
   PRIMARY KEY(person_id)
 );
 

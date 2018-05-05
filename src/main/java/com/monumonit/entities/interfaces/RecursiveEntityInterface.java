@@ -13,7 +13,5 @@ public interface RecursiveEntityInterface<T extends Serializable> {
 
     void setChildren(List<T> children);
 
-    void adopt(List<T> children);
-
     void transferChildrenTo(T parent);
 }

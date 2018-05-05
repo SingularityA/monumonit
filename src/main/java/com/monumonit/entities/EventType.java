@@ -1,20 +1,19 @@
 package com.monumonit.entities;
 
+import com.monumonit.entities.common.BasicEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+
 @Entity
-public class EventType implements Serializable {
+@Data @EqualsAndHashCode(callSuper = true)
+@AttributeOverride(name = "id", column = @Column(name = "event_type_id"))
+public class EventType extends BasicEntity<Integer> implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_type_id")
-    Integer id;
+    private String name;
 
-    String name;
-
-    String description;
+    private String description;
 }
