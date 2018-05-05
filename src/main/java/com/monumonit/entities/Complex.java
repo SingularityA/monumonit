@@ -1,51 +1,24 @@
 package com.monumonit.entities;
 
-import com.monumonit.entities.interfaces.RecursiveEntityInterface;
+import com.monumonit.entities.common.RecursiveEntity;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
+
 @Entity
-@DynamicUpdate
-public class Complex implements Serializable, RecursiveEntityInterface<Complex> {
+@Data @EqualsAndHashCode(callSuper = true)
+@AttributeOverride(name = "id", column = @Column(name = "complex_id"))
+@AssociationOverride(name = "parent", joinColumns = @JoinColumn(name = "part_complex_id"))
+public class Complex extends RecursiveEntity<Complex> implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "complex_id")
-    Long id;
-
-    String name;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    Country country;
+    private Country country;
 
-    String address;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "part_complex_id")
-    Complex parent;
-
-    @OneToMany(mappedBy = "parent",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    List<Complex> children;
-
-    public void adopt(List<Complex> children) {
-        children.forEach(child -> child.setParent(this));
-        this.children.addAll(children);
-    }
-
-    public void transferChildrenTo(Complex parent) {
-        this.children.forEach(child -> child.setParent(parent));
-        if (parent != null)
-            parent.getChildren().addAll(children);
-        this.children = new ArrayList<>();
-    }
-
+    private String address;
 }
