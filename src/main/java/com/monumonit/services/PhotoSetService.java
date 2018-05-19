@@ -1,7 +1,7 @@
 package com.monumonit.services;
 
-import com.monumonit.entities.Monument;
-import com.monumonit.repositories.MonumentRepository;
+import com.monumonit.entities.PhotoSet;
+import com.monumonit.repositories.PhotoSetRepository;
 import com.monumonit.services.common.AbstractRecursiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,13 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MonumentService extends AbstractRecursiveService<Monument> {
+public class PhotoSetService extends AbstractRecursiveService<PhotoSet> {
 
     @Autowired
-    private MonumentRepository monumentRepository;
+    private PhotoSetRepository photoSetRepository;
 
-    @Override
-    protected JpaRepository<Monument, Long> getRepository() {
-        return monumentRepository;
+    protected JpaRepository<PhotoSet, Long> getRepository() {
+        return photoSetRepository;
     }
 }

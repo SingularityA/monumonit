@@ -1,7 +1,7 @@
 package com.monumonit.services;
 
-import com.monumonit.entities.Monument;
-import com.monumonit.repositories.MonumentRepository;
+import com.monumonit.entities.BioDestruction;
+import com.monumonit.repositories.BioDestructionRepository;
 import com.monumonit.services.common.AbstractRecursiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MonumentService extends AbstractRecursiveService<Monument> {
+public class BioDestructionService extends AbstractRecursiveService<BioDestruction> {
 
     @Autowired
-    private MonumentRepository monumentRepository;
+    private BioDestructionRepository bioDestructionRepository;
 
     @Override
-    protected JpaRepository<Monument, Long> getRepository() {
-        return monumentRepository;
+    protected JpaRepository<BioDestruction, Long> getRepository() {
+        return bioDestructionRepository;
     }
 }
