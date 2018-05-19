@@ -83,9 +83,11 @@ CREATE TABLE person (
 
 -- PARTICIPANT
 CREATE TABLE participant (
-  person_id  BIGINT  NOT NULL,
-  event_id   BIGINT  NOT NULL,
-  role_id    INTEGER NOT NULL,
+  participant_id  SERIAL8 NOT NULL,
+  person_id      BIGINT  NOT NULL,
+  event_id       BIGINT  NOT NULL,
+  role_id        INTEGER NOT NULL,
+  PRIMARY KEY(participant_id),
   UNIQUE(person_id, event_id, role_id)
 );
 
@@ -166,10 +168,9 @@ CREATE TABLE document (
   document_id       SERIAL8   NOT NULL,
   creation_time     TIMESTAMP NOT NULL,
   last_edit_time    TIMESTAMP NOT NULL,
-  bin_data_id       BIGINT    NOT NULL,
+  file_id           BIGINT    NOT NULL,
   version           VARCHAR(100),
   document_type_id  INTEGER   NOT NULL,
-  next_document_id  BIGINT,
   last_document_id  BIGINT,
   description       VARCHAR(500),
   PRIMARY KEY (document_id)
@@ -224,10 +225,11 @@ CREATE TABLE bio_property (
 
 -- BIO_DESTRUCTOR
 CREATE TABLE bio_destructor (
-  bio_destructor_id  SERIAL8 NOT NULL UNIQUE,
-  bio_class_id       BIGINT  NOT NULL UNIQUE,
-  document_id        BIGINT,
-  hazard             INTEGER NOT NULL,
+  bio_destructor_id   SERIAL8 NOT NULL UNIQUE,
+  bio_destruction_id  BIGINT  NOT NULL,
+  bio_class_id        BIGINT  NOT NULL UNIQUE,
+  document_id         BIGINT,
+  hazard              INTEGER NOT NULL,
   PRIMARY KEY (bio_destructor_id),
   UNIQUE(bio_destructor_id, bio_class_id)
 );
@@ -243,13 +245,6 @@ CREATE TABLE bio_destruction (
   CONSTRAINT bio_destruction_self_ref_constraint CHECK (part_bio_destruction_id != bio_destruction_id)
 );
 
--- BIO_DESTRUCTION_CAUSE
-CREATE TABLE bio_destruction_cause (
-  bio_destruction_id  BIGINT NOT NULL,
-  bio_destructor_id   BIGINT NOT NULL,
-  UNIQUE(bio_destruction_id, bio_destructor_id)
-);
-
 -- BIO_DESTRUCTION_EVENT
 CREATE TABLE bio_destruction_event (
   bio_destruction_id  BIGINT NOT NULL,
@@ -260,7 +255,6 @@ CREATE TABLE bio_destruction_event (
 -- //@UNDO
 -- SQL to undo the change goes here.
 DROP TABLE bio_destruction_event;
-DROP TABLE bio_destruction_cause;
 DROP TABLE bio_destruction;
 DROP TABLE bio_destructor;
 DROP TABLE bio_property;

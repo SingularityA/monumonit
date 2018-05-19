@@ -51,7 +51,6 @@ INSERT INTO event (name, event_type_id, start_date, finit_date, part_event_id) V
 -- //@UNDO
 -- SQL to undo the change goes here.
 TRUNCATE bio_destruction_event;
-TRUNCATE bio_destruction_cause;
 TRUNCATE bio_destruction;
 TRUNCATE bio_destructor;
 TRUNCATE bio_property;

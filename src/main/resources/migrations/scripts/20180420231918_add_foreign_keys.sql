@@ -60,10 +60,10 @@ ALTER TABLE monument_event ADD CONSTRAINT monument_event__event_fkey FOREIGN KEY
 -- MONUMENT_EVENT ->> ROLE
 ALTER TABLE monument_event ADD CONSTRAINT monument_event__role_fkey FOREIGN KEY (role_id) REFERENCES role(role_id);
 
+-- DOCUMENT ->> FILE
+ALTER TABLE document ADD CONSTRAINT document__file_fkey FOREIGN KEY (file_id) REFERENCES file(file_id);
 -- DOCUMENT ->> DOCUMENT_TYPE
 ALTER TABLE document ADD CONSTRAINT document__document_type_fkey FOREIGN KEY (document_type_id) REFERENCES document_type(document_type_id);
--- DOCUMENT ->> NEXT_DOCUMENT
-ALTER TABLE document ADD CONSTRAINT document__next_doc_fkey FOREIGN KEY (next_document_id) REFERENCES document(document_id);
 -- DOCUMENT ->> LAST_DOCUMENT
 ALTER TABLE document ADD CONSTRAINT document__last_doc_fkey FOREIGN KEY (last_document_id) REFERENCES document(document_id);
 
@@ -90,6 +90,9 @@ ALTER TABLE bio_property ADD CONSTRAINT bio_prop__bio_class_fkey FOREIGN KEY (bi
 -- BIO_PROPERTIES ->> DOCUMENT
 ALTER TABLE bio_property ADD CONSTRAINT bio_prop__document_fkey FOREIGN KEY (document_id) REFERENCES document(document_id);
 
+-- BIO_DESTRUCTOR ->> BIO_DESTRUCTION
+ALTER TABLE bio_destructor ADD CONSTRAINT bio_destructor__bio_destruction_fkey
+	FOREIGN KEY (bio_destruction_id) REFERENCES bio_destruction(bio_destruction_id);
 -- BIO_DESTRUCTOR ->> BIO_CLASS
 ALTER TABLE bio_destructor ADD CONSTRAINT bio_destructor__bio_class_fkey
 	FOREIGN KEY (bio_class_id) REFERENCES bio_class(bio_class_id);
@@ -104,13 +107,6 @@ ALTER TABLE bio_destruction ADD CONSTRAINT bio_destruction__document_fkey
 ALTER TABLE bio_destruction ADD CONSTRAINT bio_destruction__part_bio_destruction_fkey
 	FOREIGN KEY (part_bio_destruction_id) REFERENCES bio_destruction(bio_destruction_id);
 
--- BIO_DESTRUCTION_CAUSE ->> BIO_DESTRUCTION
-ALTER TABLE bio_destruction_cause ADD CONSTRAINT bio_destruction_cause__bio_destruction_fkey
-	FOREIGN KEY (bio_destruction_id) REFERENCES bio_destruction(bio_destruction_id);
--- BIO_DESTRUCTION_CAUSE ->> BIO_DESTRUCTOR
-ALTER TABLE bio_destruction_cause ADD CONSTRAINT bio_destruction_cause__bio_destructor_fkey
-	FOREIGN KEY (bio_destructor_id) REFERENCES bio_destructor(bio_destructor_id);
-
 -- BIO_DESTRUCTION_EVENT ->> BIO_DESTRUCTION
 ALTER TABLE bio_destruction_event ADD CONSTRAINT bio_destruction_event__bio_destruction_fkey
 	FOREIGN KEY (bio_destruction_id) REFERENCES bio_destruction(bio_destruction_id);
@@ -123,14 +119,12 @@ ALTER TABLE bio_destruction_event ADD CONSTRAINT bio_destruction_event__event_fk
 ALTER TABLE bio_destruction_event DROP CONSTRAINT bio_destruction_event__event_fkey;
 ALTER TABLE bio_destruction_event DROP CONSTRAINT bio_destruction_event__bio_destruction_fkey;
 
-ALTER TABLE bio_destruction_cause DROP CONSTRAINT bio_destruction_cause__bio_destructor_fkey;
-ALTER TABLE bio_destruction_cause DROP CONSTRAINT bio_destruction_cause__bio_destruction_fkey;
-
 ALTER TABLE bio_destruction DROP CONSTRAINT bio_destruction__part_bio_destruction_fkey;
 ALTER TABLE bio_destruction DROP CONSTRAINT bio_destruction__document_fkey;
 
 ALTER TABLE bio_destructor DROP CONSTRAINT bio_destructor__document_fkey;
 ALTER TABLE bio_destructor DROP CONSTRAINT bio_destructor__bio_class_fkey;
+ALTER TABLE bio_destructor DROP CONSTRAINT bio_destructor__bio_destruction_fkey;
 
 ALTER TABLE bio_property DROP CONSTRAINT bio_prop__document_fkey;
 ALTER TABLE bio_property DROP CONSTRAINT bio_prop__bio_class_fkey;
@@ -147,8 +141,8 @@ ALTER TABLE document_event DROP CONSTRAINT document_event__event_fkey;
 ALTER TABLE document_event DROP CONSTRAINT document_event__document_fkey;
 
 ALTER TABLE document DROP CONSTRAINT document__last_doc_fkey;
-ALTER TABLE document DROP CONSTRAINT document__next_doc_fkey;
 ALTER TABLE document DROP CONSTRAINT document__document_type_fkey;
+ALTER TABLE document DROP CONSTRAINT document__file_fkey;
 
 ALTER TABLE monument_event DROP CONSTRAINT monument_event__role_fkey;
 ALTER TABLE monument_event DROP CONSTRAINT monument_event__event_fkey;
