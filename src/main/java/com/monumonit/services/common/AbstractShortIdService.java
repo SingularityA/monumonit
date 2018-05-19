@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @Transactional
-public abstract class AbstractIntegerIdService<T extends Serializable> extends AbstractBasicService<T, Integer> {
+public abstract class AbstractShortIdService<T extends Serializable> extends AbstractBasicService<T, Integer> {
     protected abstract JpaRepository<T, Integer> getRepository();
 
     @Override
