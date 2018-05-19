@@ -1,4 +1,4 @@
-package com.monumonit.services;
+package com.monumonit.services.common;
 
 import com.google.common.collect.Lists;
 import com.monumonit.services.interfaces.BasicServiceInterface;

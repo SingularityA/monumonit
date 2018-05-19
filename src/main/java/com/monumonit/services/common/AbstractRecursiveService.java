@@ -1,11 +1,10 @@
-package com.monumonit.services;
+package com.monumonit.services.common;
 
 import com.monumonit.entities.interfaces.RecursiveEntityInterface;
 import com.monumonit.services.interfaces.RecursiveServiceInterface;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Transactional
 public abstract class AbstractRecursiveService<T extends Serializable & RecursiveEntityInterface<T>>
