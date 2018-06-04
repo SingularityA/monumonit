@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -21,4 +22,8 @@ public class Complex extends RecursiveEntity<Complex> implements Serializable {
     private Country country;
 
     private String address;
+
+    @OneToMany(mappedBy = "complex",
+            fetch = FetchType.LAZY)
+    private List<Monument> monuments;
 }
