@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -15,4 +16,8 @@ import java.io.Serializable;
 public class Country extends RecursiveEntity<Country> implements Serializable {
 
     private String name;
+
+    @OneToMany(mappedBy = "country",
+            fetch = FetchType.LAZY)
+    private List<Complex> complexes;
 }
