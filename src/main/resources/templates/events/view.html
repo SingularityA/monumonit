@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Event View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/css/common.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!--  Scripts-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/init.js"></script>
+</head>
+<body>
+
+<div th:replace="~{header :: header}">Header</div>
+
+<div class="container">
+    <div class="container">
+        <br><br>
+        <div class="row center">
+            <h4 class="header col s12 light" th:text="'Событие: ' + ${event.name}"></h4>
+        </div>
+    </div>
+    <div class="section">
+        <table class="striped">
+            <thead>
+            <tr>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ИМЯ</td>
+                <td th:text="${event.name}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ТИП</td>
+                <td th:text="${event.eventType.name}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ДАТА НАЧАЛА</td>
+                <td th:text="${event?.startDate}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ДАТА ОКОНЧАНИЯ</td>
+                <td th:text="${event?.finitDate}"></td>
+                <td></td>
+            </tr>
+            <tr th:if="${event.parent != null}">
+                <td>ЯВЛЯЕТСЯ ЧАСТЬЮ СОБЫТИЯ</td>
+                <td th:text="${event?.parent.name}"></td>
+                <td>
+                    <a class="btn-floating waves-effect waves-light blue-grey lighten-2" th:href="@{/event/view/{id}/(id=${event.parent.id})}">
+                        <i class="material-icons">pageview</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a class="waves-effect waves-light btn blue-grey"><i class="material-icons right">delete</i>Delete</a>
+        <a class="waves-effect waves-light btn right green"><i class="material-icons right">edit</i>Edit</a>
+    </div>
+    <div class="section" th:if="${not #lists.isEmpty(event.photoSets)}">
+        <h5 class="header col s12 light">Съемки</h5>
+        <div class="section" th:each="photoSet, stat : ${event.photoSets}">
+            <div class="card-panel">
+                <p th:text="${photoSet.description != null} ? ${photoSet.description} : 'Описание не было предоставлено.'"></p>
+                <div class="card-panel">
+                    <p>Photo1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+</div>
+
+<div th:replace="~{footer :: footer}">Footer</div>
+
+</body>
+</html>

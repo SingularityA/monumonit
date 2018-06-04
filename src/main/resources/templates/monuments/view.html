@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Monument View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/css/common.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!--  Scripts-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/init.js"></script>
+</head>
+<body>
+
+<div th:replace="~{header :: header}">Header</div>
+
+<div class="container">
+    <div class="container">
+        <br><br>
+        <div class="row center">
+            <h4 class="header col s12 light" th:text="${monument.name}"></h4>
+        </div>
+    </div>
+    <div class="section">
+        <table class="striped">
+            <thead>
+            <tr>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ИМЯ</td>
+                <td th:text="${monument.name}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ТИП</td>
+                <td th:text="${monument.monumentType.name}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>ИМЯ КОМПЛЕКСА</td>
+                <td th:text="${monument.complex.name}"></td>
+                <td>
+                    <a class="btn-floating waves-effect waves-light blue-grey lighten-2" th:href="@{/complex/view/{id}/(id=${monument.complex.id})}">
+                        <i class="material-icons">pageview</i>
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${monument.parent != null}">
+                <td>ЯВЛЯЕТСЯ ЧАСТЬЮ ПАМЯТНИКА</td>
+                <td th:text="${monument?.parent.name}"></td>
+                <td>
+                    <a class="btn-floating waves-effect waves-light blue-grey lighten-2" th:href="@{/monument/view/{id}/(id=${monument.parent.id})}">
+                        <i class="material-icons">pageview</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section">
+        <h5 class="header col s12 light">Описание</h5>
+        <div class="card-panel">
+            <p th:text="${monument.description != null} ? ${monument.description} : 'Описание не было предоставлено.'"></p>
+        </div>
+        <div>
+            <a class="waves-effect waves-light btn blue-grey" th:href="@{/monument/delete/{id}/(id=${monument.id})}" type="submit">
+                <i class="material-icons right">delete</i>Delete
+            </a>
+            <a class="waves-effect waves-light btn right green" th:href="@{/monument/update/{id}/(id=${monument.id})}">
+                <i class="material-icons right">edit</i>Edit
+            </a>
+        </div>
+    </div>
+    <div class="section" th:if="${not #lists.isEmpty(monument.events)}">
+        <h5 class="header col s12 light">События</h5>
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ИМЯ</th>
+                <th>ТИП</th>
+                <th>НАЧАЛО</th>
+                <th>КОНЕЦ</th>
+                <th>РОЛЬ</th>
+                <th>ЯВЛЯЕТСЯ ЧАСТЬЮ...</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody th:each="me, stat : ${monument.events}">
+            <tr>
+                <td th:text="${stat.count}"></td>
+                <td th:text="${me.event.name}"></td>
+                <td th:text="${me.event.eventType.name}"></td>
+                <td th:text="${me.event?.startDate}"></td>
+                <td th:text="${me.event?.finitDate}"></td>
+                <td th:text="${me.role.name}"></td>
+                <td th:text="${me.event?.parent?.name}"></td>
+                <td>
+                    <a class="btn-floating waves-effect waves-light blue-grey lighten-2" th:href="@{/event/view/{id}/(id=${me.event.id})}">
+                        <i class="material-icons">pageview</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br><br>
+</div>
+
+<div th:replace="~{footer :: footer}">Footer</div>
+
+</body>
+</html>

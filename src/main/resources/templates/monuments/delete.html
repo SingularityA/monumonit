@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Monument View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/css/common.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Scripts -->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/init.js"></script>
+</head>
+<body>
+
+<div th:replace="~{header :: header}">Header</div>
+
+<div class="container">
+    <div class="container">
+        <br><br>
+        <div class="row center">
+            <h4 class="header col s12 light">Delete Monument ?</h4>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col s12" action="#" th:action="@{/monument/delete/{id}/(id=${monumentDto.id})}" th:object="${monumentDto}" method="post">
+            <!-- ID -->
+            <input class="hide disabled" type="text" th:field="*{id}" th:value="${monumentDto?.id}"/>
+
+            <div class="row">
+                <a class="waves-effect waves-light btn blue-grey" th:href="@{/monument/view/{id}/(id=${monumentDto.id})}">
+                    <i class="material-icons right">cancel</i>Cancel
+                </a>
+                <a class="waves-effect waves-light btn right green">
+                    <input th:href="@{/monument/delete/{id}/(id=${monumentDto.id})}" type="submit" value="Delete">
+                    <i class="material-icons right">send</i>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

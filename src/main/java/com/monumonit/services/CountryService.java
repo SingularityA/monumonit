@@ -1,7 +1,7 @@
 package com.monumonit.services;
 
-import com.monumonit.entities.Monument;
-import com.monumonit.repositories.MonumentRepository;
+import com.monumonit.entities.Country;
+import com.monumonit.repositories.CountryRepository;
 import com.monumonit.services.common.AbstractRecursiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MonumentService extends AbstractRecursiveService<Monument> {
+public class CountryService extends AbstractRecursiveService<Country> {
 
     @Autowired
-    private MonumentRepository monumentRepository;
+    private CountryRepository countryRepository;
 
     @Override
-    protected JpaRepository<Monument, Long> getRepository() {
-        return monumentRepository;
+    protected JpaRepository<Country, Long> getRepository() {
+        return countryRepository;
     }
 }

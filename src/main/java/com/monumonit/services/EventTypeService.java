@@ -1,7 +1,7 @@
 package com.monumonit.services;
 
-import com.monumonit.entities.MonumentType;
-import com.monumonit.repositories.MonumentTypeRepository;
+import com.monumonit.entities.EventType;
+import com.monumonit.repositories.EventTypeRepository;
 import com.monumonit.services.common.AbstractShortIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MonumentTypeService extends AbstractShortIdService<MonumentType> {
+public class EventTypeService extends AbstractShortIdService<EventType> {
 
     @Autowired
-    MonumentTypeRepository monumentTypeRepository;
+    private EventTypeRepository eventTypeRepository;
 
     @Override
-    protected JpaRepository<MonumentType, Integer> getRepository() {
-        return monumentTypeRepository;
+    protected JpaRepository<EventType, Integer> getRepository() {
+        return eventTypeRepository;
     }
 }

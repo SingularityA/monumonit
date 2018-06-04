@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -25,4 +26,8 @@ public class Monument extends RecursiveEntity<Monument> implements Serializable 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "complex_id")
     private Complex complex;
+
+    @OneToMany(mappedBy = "monument",
+            fetch = FetchType.LAZY)
+    private List<MonumentEvent> events;
 }
