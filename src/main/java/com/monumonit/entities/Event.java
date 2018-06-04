@@ -7,8 +7,9 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-//TODO
+
 @Entity
 @Data @EqualsAndHashCode(callSuper = true)
 @AttributeOverride(name = "id", column = @Column(name = "event_id"))
@@ -26,4 +27,8 @@ public class Event extends RecursiveEntity<Event> implements Serializable {
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date finitDate;
+
+    @OneToMany(mappedBy = "event",
+            fetch = FetchType.LAZY)
+    private List<PhotoSet> photoSets;
 }
