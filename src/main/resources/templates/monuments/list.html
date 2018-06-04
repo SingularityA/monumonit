@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Monuments List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/css/common.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!--  Scripts-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/init.js"></script>
+</head>
+<body>
+
+<div th:replace="~{header :: header}">Header</div>
+
+<div class="container">
+    <div class="container">
+        <br><br>
+        <div class="row center">
+            <h4 class="header col s12 light">Памятники</h4>
+        </div>
+    </div>
+    <div class="section">
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ИМЯ</th>
+                <th>ТИП</th>
+                <th>ОПИСАНИЕ</th>
+                <th>ИМЯ КОМПЛЕКСА</th>
+                <th>ЯВЛЯЕТСЯ ЧАСТЬЮ...</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody th:each="monument, stat : ${monuments}">
+            <tr>
+                <td th:text="${stat.count}"></td>
+                <td th:text="${monument.name}"></td>
+                <td th:text="${monument.monumentType.name}"></td>
+                <td th:text="${monument?.description}"></td>
+                <td th:text="${monument.complex.name}"></td>
+                <td th:text="${monument.parent?.name}"></td>
+                <td>
+                    <a class="btn-floating waves-effect waves-light blue-grey lighten-2" th:href="@{/monument/view/{id}/(id=${monument.id})}">
+                        <i class="material-icons">pageview</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a class="waves-effect waves-light btn right green" th:href="@{/monument/create/}">
+            <i class="material-icons right">add</i>Add
+        </a>
+    </div>
+    <br><br>
+</div>
+
+<div th:replace="~{footer :: footer}">Footer</div>
+
+</body>
+</html>
