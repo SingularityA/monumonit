@@ -130,17 +130,20 @@ CREATE TABLE material_event (
 
 -- COMPLEX_EVENT
 CREATE TABLE complex_event (
-  complex_id  BIGINT  NOT NULL,
-  event_id    BIGINT  NOT NULL,
-  role_id     INTEGER NOT NULL,
+  complex_event_id  SERIAL8 NOT NULL,
+  complex_id        BIGINT  NOT NULL,
+  event_id          BIGINT  NOT NULL,
+  role_id           INTEGER NOT NULL,
   UNIQUE(complex_id, event_id, role_id)
 );
 
 -- MONUMENT_EVENT
 CREATE TABLE monument_event (
-  monument_id  BIGINT  NOT NULL,
-  event_id     BIGINT  NOT NULL,
-  role_id      INTEGER NOT NULL,
+  monument_event_id  SERIAL8 NOT NULL,
+  monument_id        BIGINT  NOT NULL,
+  event_id           BIGINT  NOT NULL,
+  role_id            INTEGER NOT NULL,
+  PRIMARY KEY(monument_event_id),
   UNIQUE(monument_id, event_id, role_id)
 );
 
